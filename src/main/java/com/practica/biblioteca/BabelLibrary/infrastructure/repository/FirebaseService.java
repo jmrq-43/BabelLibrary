@@ -1,19 +1,19 @@
-package com.practica.biblioteca.infrastructure.adapters;
+package com.practica.biblioteca.BabelLibrary.infrastructure.repository;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
-import com.practica.biblioteca.domain.entities.Book;
-import com.practica.biblioteca.domain.repositories.BookRepository;
+import com.practica.biblioteca.BabelLibrary.domain.model.Book;
+import com.practica.biblioteca.BabelLibrary.domain.service.BookService1;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class FirebaseBookRepository implements BookRepository {
+public class FirebaseService1 implements BookService1 {
 
     private final Firestore firestore;
 
-    public FirebaseBookRepository(Firestore firestore) {
+    public FirebaseService1(Firestore firestore) {
         this.firestore = firestore;
     }
 

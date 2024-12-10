@@ -1,4 +1,4 @@
-package com.practica.biblioteca.domain.entities;
+package com.practica.biblioteca.domain.model;
 
 import lombok.Builder;
 import lombok.Getter;
