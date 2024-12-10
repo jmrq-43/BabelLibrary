@@ -12,6 +12,7 @@ public class Book {
     private String id;
     private String title;
     private String author;
+    private int year;
 
     @Builder
     public Book(String id, String title, String author) {
