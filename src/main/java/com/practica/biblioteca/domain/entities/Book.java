@@ -12,8 +12,8 @@ public class Book {
     private String author;
 
     @Builder
-    public Book(String name, String title, String author) {
-        this.name = name;
+    public Book(String id, String title, String author) {
+        this.id = id;
         this.title = title;
         this.author = author;
     }
