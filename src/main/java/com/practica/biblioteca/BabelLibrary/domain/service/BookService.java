@@ -4,8 +4,8 @@ import com.practica.biblioteca.BabelLibrary.domain.model.Book;
 
 import java.util.List;
 
-public interface BookService1 {
-    Book save(Book book);
+public interface BookService {
+    String  saveBook(Book book);
 
     List<Book> getBooks();
 }

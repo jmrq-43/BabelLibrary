@@ -1,11 +1,13 @@
-package com.practica.biblioteca.domain.model;
+package com.practica.biblioteca.BabelLibrary.domain.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class Book {
     private String id;
     private String title;
