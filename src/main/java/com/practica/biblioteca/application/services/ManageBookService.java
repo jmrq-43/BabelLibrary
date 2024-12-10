@@ -2,9 +2,11 @@ package com.practica.biblioteca.application.services;
 
 import com.practica.biblioteca.domain.entities.Book;
 import com.practica.biblioteca.domain.repositories.BookRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ManageBookService {
     private final BookRepository bookRepository;
 
