@@ -1,41 +1,27 @@
 package com.practica.biblioteca.BabelLibrary.infrastructure.repository;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.practica.biblioteca.BabelLibrary.domain.model.Book;
-import com.practica.biblioteca.BabelLibrary.domain.service.BookService1;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class FirebaseService1 implements BookService1 {
+@Service
+public class FirebaseService {
 
-    private final Firestore firestore;
+    private final DatabaseReference librosRef = FirebaseDatabase.getInstance().getReference("libros");
 
-    public FirebaseService1(Firestore firestore) {
-        this.firestore = firestore;
+    public String agregarLibro(Book book) {
+        String id = librosRef.push().getKey();
+        book.setId(id);
+        librosRef.child(id).setValueAsync(book);
+        return id;
     }
 
-    @Override
-    public Book save(Book book) {
-        DocumentReference documentRef = firestore.collection("books").document();
-        book.setId(documentRef.getId());
-        ApiFuture<WriteResult> resul = documentRef.set(book);
-        return book;
-    }
-
-    @Override
-    public List<Book> getAll() {
-        List<Book> books = new ArrayList<>();
-        try {
-            ApiFuture<QuerySnapshot> query = firestore.collection("books").get();
-            for (DocumentSnapshot doc : query.get().getDocuments()) {
-                books.add(doc.toObject(Book.class));
-            }
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return List.of();
+    public List<Book> obtenerLibros() {
+        return new ArrayList<>();
     }
 }
+
