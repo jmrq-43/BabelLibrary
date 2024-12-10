@@ -1,4 +1,4 @@
-package com.practica.biblioteca.infrastructure;
+package com.practica.biblioteca.infrastructure.firebase;
 
 import com.google.api.client.util.Value;
 import com.google.auth.oauth2.GoogleCredentials;
