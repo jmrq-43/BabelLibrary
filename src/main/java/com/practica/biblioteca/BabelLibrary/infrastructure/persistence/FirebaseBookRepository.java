@@ -1,27 +1,45 @@
 package com.practica.biblioteca.BabelLibrary.infrastructure.persistence;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.practica.biblioteca.BabelLibrary.domain.model.Book;
-import org.springframework.stereotype.Service;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.WriteResult;
+import com.practica.biblioteca.BabelLibrary.domain.Book;
+import com.practica.biblioteca.BabelLibrary.domain.BookRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-@Service
-public class FirebaseService {
+@Repository
+public class FirebaseBookRepository implements BookRepository {
 
-    private final DatabaseReference librosRef = FirebaseDatabase.getInstance().getReference("libros");
+    private final Firestore firestore;
 
-    public String agregarLibro(Book book) {
-        String id = librosRef.push().getKey();
-        book.setId(id);
-        librosRef.child(id).setValueAsync(book);
-        return id;
+    public FirebaseBookRepository(Firestore firestore) {
+        this.firestore = firestore;
     }
 
-    public List<Book> obtenerLibros() {
-        return new ArrayList<>();
+    @Override
+    public void saveBook(Book book) {
+        try {
+            WriteResult writeResult = firestore.collection("books")
+                    .document(book.getId())
+                    .set(book)
+                    .get();
+            System.out.println("saved book: " + writeResult.getUpdateTime());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Error to saved book: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Book getBook(String id) {
+        try {
+            DocumentReference docRef = firestore.collection("books").document(id);
+            DocumentSnapshot document = docRef.get().get();
+            return document.exists() ? document.toObject(Book.class) : null;
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Error to get book: " + e.getMessage(), e);
+        }
     }
 }
-
